@@ -34,14 +34,16 @@ class Arrays implements Type
 {
     private $_type;
     private $_name;
+    private $_optional;
     private $_complexType;
     private $_counter;
 
-    public function __construct($type, $name, $complexType, $counter = 0)
+    public function __construct($type, $name, $complexType, $optional = false, $counter = 0)
     {
         $this->_type = $type;
         $this->_name = $name;
         $this->_complexType = $complexType;
+        $this->_optional = $optional;
         $this->_counter = $counter;
     }
 
@@ -53,6 +55,11 @@ class Arrays implements Type
     public function getName()
     {
         return $this->_name;
+    }
+
+    public function getOptional()
+    {
+        return $this->_optional;
     }
 
     /**

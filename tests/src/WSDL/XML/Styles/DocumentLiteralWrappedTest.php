@@ -83,7 +83,7 @@ class DocumentLiteralWrappedTest extends PHPUnit_Framework_TestCase
         $type = $types[0];
         // convention 4, input wrapper element name should match with Operation name
         $this->assertEquals('method', $type->getName());
-        $this->assertEquals(array(array('type' => 'type', 'value' => 'ns:ArrayOfNames', 'name' => 'names')), $type->getElementAttributes());
+        $this->assertEquals(array(array('type' => 'type', 'value' => 'ns:ArrayOfNames', 'name' => 'names', 'optional' => false)), $type->getElementAttributes());
         Assert::thatArray($type->getComplex())->onMethod('getName')->containsExactly('ArrayOfNames');
         Assert::thatArray($type->getComplex())->onMethod('getArrayType')->containsExactly('xsd:string[]');
     }
@@ -102,12 +102,12 @@ class DocumentLiteralWrappedTest extends PHPUnit_Framework_TestCase
         //then
         $type = $types[0];
         $this->assertEquals('method', $type->getName());
-        $this->assertEquals(array(array('type' => 'element', 'value' => 'ns:Info', 'name' => 'info')), $type->getElementAttributes());
+        $this->assertEquals(array(array('type' => 'element', 'value' => 'ns:Info', 'name' => 'info', 'optional' => false)), $type->getElementAttributes());
         Assert::thatArray($type->getComplex())->onMethod('getName')->containsExactly('Info');
         Assert::thatArray($type->getComplex())->onMethod('getElementAttributes')
             ->containsKeyAndValue(array(array(
-                array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name'),
-                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age')
+                array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name', 'optional' => false),
+                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age', 'optional' => false)
             )));
     }
 
@@ -126,20 +126,20 @@ class DocumentLiteralWrappedTest extends PHPUnit_Framework_TestCase
         $type = $types[0];
         $this->assertEquals('method', $type->getName());
         $this->assertEquals(array(
-            array('type' => 'element', 'value' => 'ns:AgentNameWithId', 'name' => 'agentNameWithId')
+            array('type' => 'element', 'value' => 'ns:AgentNameWithId', 'name' => 'agentNameWithId', 'optional' => false)
         ), $type->getElementAttributes());
         $complexActual = $type->getComplex();
         Assert::thatArray($complexActual)->onMethod('getName')->containsExactly('AgentNameWithId');
         Assert::thatArray($complexActual)->onMethod('getElementAttributes')
             ->containsKeyAndValue(array(array(
-                array('type' => 'element', 'value' => 'ns:MocksMockUserWrapper', 'name' => 'agent'),
-                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id')
+                array('type' => 'element', 'value' => 'ns:MocksMockUserWrapper', 'name' => 'agent', 'optional' => false),
+                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false)
             )));
         Assert::thatArray($complexActual[0]->getComplex())->onMethod('getElementAttributes')
             ->containsKeyAndValue(array(array(
-                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id'),
-                array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name'),
-                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age')
+                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false),
+                array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name', 'optional' => false),
+                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age', 'optional' => false)
             )));
     }
 
@@ -158,14 +158,14 @@ class DocumentLiteralWrappedTest extends PHPUnit_Framework_TestCase
         $type = $types[0];
         $this->assertEquals('method', $type->getName());
         $this->assertEquals(array(
-            array('type' => 'element', 'value' => 'ns:NamesInfo', 'name' => 'namesInfo')
+            array('type' => 'element', 'value' => 'ns:NamesInfo', 'name' => 'namesInfo', 'optional' => false)
         ), $type->getElementAttributes());
         $actualContext = $type->getComplex();
         Assert::thatArray($actualContext)->onMethod('getName')->containsExactly('NamesInfo');
         Assert::thatArray($actualContext)->onMethod('getElementAttributes')
             ->containsKeyAndValue(array(array(
-                array('type' => 'type', 'value' => 'ns:ArrayOfNames', 'name' => 'names'),
-                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id')
+                array('type' => 'type', 'value' => 'ns:ArrayOfNames', 'name' => 'names', 'optional' => false),
+                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false)
             )));
         Assert::thatArray($actualContext[0]->getComplex())->onMethod('getName')->containsExactly('ArrayOfNames');
         Assert::thatArray($actualContext[0]->getComplex())->onMethod('getArrayType')->containsExactly('xsd:string[]');
@@ -185,14 +185,14 @@ class DocumentLiteralWrappedTest extends PHPUnit_Framework_TestCase
         //then
         $type = $types[0];
         $this->assertEquals('method', $type->getName());
-        $this->assertEquals(array(array('type' => 'type', 'value' => 'ns:ArrayOfCompanies', 'name' => 'companies')), $type->getElementAttributes());
+        $this->assertEquals(array(array('type' => 'type', 'value' => 'ns:ArrayOfCompanies', 'name' => 'companies', 'optional' => false)), $type->getElementAttributes());
         $actualContext = $type->getComplex();
         Assert::thatArray($actualContext)->onMethod('getName')->containsExactly('ArrayOfCompanies');
         Assert::thatArray($actualContext)->onMethod('getArrayType')->containsExactly('ns:Companies[]');
         $this->assertEquals('Companies', $actualContext[0]->getComplex()->getName());
         $this->assertEquals(array(
-            array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name'),
-            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id')
+            array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name', 'optional' => false),
+            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false)
         ), $actualContext[0]->getComplex()->getElementAttributes());
     }
 
@@ -210,21 +210,21 @@ class DocumentLiteralWrappedTest extends PHPUnit_Framework_TestCase
         //then
         $type = $types[0];
         $this->assertEquals('method', $type->getName());
-        $this->assertEquals(array(array('type' => 'element', 'value' => 'ns:ListOfAgents', 'name' => 'listOfAgents')), $type->getElementAttributes());
+        $this->assertEquals(array(array('type' => 'element', 'value' => 'ns:ListOfAgents', 'name' => 'listOfAgents', 'optional' => false)), $type->getElementAttributes());
         $actualContext = $type->getComplex();
         Assert::thatArray($actualContext)->onMethod('getName')->containsExactly('ListOfAgents');
         $this->assertEquals(array(
-            array('type' => 'type', 'value' => 'ns:ArrayOfAgents', 'name' => 'agents'),
-            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id')
+            array('type' => 'type', 'value' => 'ns:ArrayOfAgents', 'name' => 'agents', 'optional' => false),
+            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false)
         ), $actualContext[0]->getElementAttributes());
         Assert::thatArray($actualContext[0]->getComplex())->onMethod('getName')->containsExactly('ArrayOfAgents');
         Assert::thatArray($actualContext[0]->getComplex())->onMethod('getArrayType')->containsExactly('ns:MocksMockUserWrapper[]');
         $actualComplex2 = $actualContext[0]->getComplex();
         $this->assertEquals('MocksMockUserWrapper', $actualComplex2[0]->getComplex()->getName());
         $this->assertEquals(array(
-            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id'),
-            array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name'),
-            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age')
+            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false),
+            array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name', 'optional' => false),
+            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age', 'optional' => false)
         ), $actualComplex2[0]->getComplex()->getElementAttributes());
     }
 
@@ -242,7 +242,7 @@ class DocumentLiteralWrappedTest extends PHPUnit_Framework_TestCase
         //then
         // convention 4, input wrapper element name should match with Operation name
         $this->assertEquals('methodResponse', $element->getName());
-        $this->assertEquals(array(array('type' => 'type', 'value' => 'ns:ArrayOfNames', 'name' => 'names')), $element->getElementAttributes());
+        $this->assertEquals(array(array('type' => 'type', 'value' => 'ns:ArrayOfNames', 'name' => 'names', 'optional' => false)), $element->getElementAttributes());
         Assert::thatArray($element->getComplex())->onMethod('getName')->containsExactly('ArrayOfNames');
         Assert::thatArray($element->getComplex())->onMethod('getArrayType')->containsExactly('xsd:string[]');
     }
@@ -260,12 +260,12 @@ class DocumentLiteralWrappedTest extends PHPUnit_Framework_TestCase
 
         //then
         $this->assertEquals('methodResponse', $element->getName());
-        $this->assertEquals(array(array('type' => 'element', 'value' => 'ns:Info', 'name' => 'info')), $element->getElementAttributes());
+        $this->assertEquals(array(array('type' => 'element', 'value' => 'ns:Info', 'name' => 'info', 'optional' => false)), $element->getElementAttributes());
         Assert::thatArray($element->getComplex())->onMethod('getName')->containsExactly('Info');
         Assert::thatArray($element->getComplex())->onMethod('getElementAttributes')
             ->containsKeyAndValue(array(array(
-                array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name'),
-                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age')
+                array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name', 'optional' => false),
+                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age', 'optional' => false)
             )));
     }
 
@@ -283,21 +283,21 @@ class DocumentLiteralWrappedTest extends PHPUnit_Framework_TestCase
         //then
         $this->assertEquals('methodResponse', $element->getName());
         $this->assertEquals(array(
-            array('type' => 'element', 'value' => 'ns:AgentNameWithId', 'name' => 'agentNameWithId')
+            array('type' => 'element', 'value' => 'ns:AgentNameWithId', 'name' => 'agentNameWithId', 'optional' => false)
         ), $element->getElementAttributes());
         $actualComplex = $element->getComplex();
         Assert::thatArray($actualComplex)->onMethod('getName')->containsExactly('AgentNameWithId');
         Assert::thatArray($actualComplex)->onMethod('getElementAttributes')
             ->containsKeyAndValue(array(array(
-                array('type' => 'element', 'value' => 'ns:MocksMockUserWrapper', 'name' => 'agent'),
-                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id')
+                array('type' => 'element', 'value' => 'ns:MocksMockUserWrapper', 'name' => 'agent', 'optional' => false),
+                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false)
             )));
         $actualComplex2 = $actualComplex[0]->getComplex();
         Assert::thatArray($actualComplex2)->onMethod('getElementAttributes')
             ->containsKeyAndValue(array(array(
-                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id'),
-                array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name'),
-                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age')
+                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false),
+                array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name', 'optional' => false),
+                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age', 'optional' => false)
             )));
     }
 
@@ -315,15 +315,15 @@ class DocumentLiteralWrappedTest extends PHPUnit_Framework_TestCase
         //then
         $this->assertEquals('methodResponse', $element->getName());
         $this->assertEquals(array(
-            array('type' => 'element', 'value' => 'ns:NamesInfo', 'name' => 'namesInfo')
+            array('type' => 'element', 'value' => 'ns:NamesInfo', 'name' => 'namesInfo', 'optional' => false)
         ), $element->getElementAttributes());
 
         $actualComplex = $element->getComplex();
         Assert::thatArray($actualComplex)->onMethod('getName')->containsExactly('NamesInfo');
         Assert::thatArray($actualComplex)->onMethod('getElementAttributes')
             ->containsKeyAndValue(array(array(
-                array('type' => 'type', 'value' => 'ns:ArrayOfNames', 'name' => 'names'),
-                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id')
+                array('type' => 'type', 'value' => 'ns:ArrayOfNames', 'name' => 'names', 'optional' => false),
+                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false)
             )));
         Assert::thatArray($actualComplex[0]->getComplex())->onMethod('getName')->containsExactly('ArrayOfNames');
         Assert::thatArray($actualComplex[0]->getComplex())->onMethod('getArrayType')->containsExactly('xsd:string[]');
@@ -342,14 +342,14 @@ class DocumentLiteralWrappedTest extends PHPUnit_Framework_TestCase
 
         //then
         $this->assertEquals('methodResponse', $element->getName());
-        $this->assertEquals(array(array('type' => 'type', 'value' => 'ns:ArrayOfCompanies', 'name' => 'companies')), $element->getElementAttributes());
+        $this->assertEquals(array(array('type' => 'type', 'value' => 'ns:ArrayOfCompanies', 'name' => 'companies', 'optional' => false)), $element->getElementAttributes());
         $actualComplex = $element->getComplex();
         Assert::thatArray($actualComplex)->onMethod('getName')->containsExactly('ArrayOfCompanies');
         Assert::thatArray($actualComplex)->onMethod('getArrayType')->containsExactly('ns:Companies[]');
         $this->assertEquals('Companies', $actualComplex[0]->getComplex()->getName());
         $this->assertEquals(array(
-            array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name'),
-            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id')
+            array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name', 'optional' => false),
+            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false)
         ), $actualComplex[0]->getComplex()->getElementAttributes());
     }
 
@@ -366,22 +366,22 @@ class DocumentLiteralWrappedTest extends PHPUnit_Framework_TestCase
 
         //then
         $this->assertEquals('methodResponse', $element->getName());
-        $this->assertEquals(array(array('type' => 'element', 'value' => 'ns:ListOfAgents', 'name' => 'listOfAgents')), $element->getElementAttributes());
+        $this->assertEquals(array(array('type' => 'element', 'value' => 'ns:ListOfAgents', 'name' => 'listOfAgents', 'optional' => false)), $element->getElementAttributes());
         $actualComplex = $element->getComplex();
         Assert::thatArray($actualComplex)->onMethod('getName')->containsExactly('ListOfAgents');
         Assert::thatArray($actualComplex)->onMethod('getElementAttributes')
             ->containsKeyAndValue(array(array(
-                array('type' => 'type', 'value' => 'ns:ArrayOfAgents', 'name' => 'agents'),
-                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id')
+                array('type' => 'type', 'value' => 'ns:ArrayOfAgents', 'name' => 'agents', 'optional' => false),
+                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false)
             )));
         $actualComplex2 = $actualComplex[0]->getComplex();
         $this->assertEquals('ArrayOfAgents', $actualComplex2[0]->getName());
         $this->assertEquals('ns:MocksMockUserWrapper[]', $actualComplex2[0]->getArrayType());
         $this->assertEquals('MocksMockUserWrapper', $actualComplex2[0]->getComplex()->getName());
         $this->assertEquals(array(
-            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id'),
-            array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name'),
-            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age')
+            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false),
+            array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name', 'optional' => false),
+            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age', 'optional' => false)
         ), $actualComplex2[0]->getComplex()->getElementAttributes());
     }
 
@@ -399,8 +399,8 @@ class DocumentLiteralWrappedTest extends PHPUnit_Framework_TestCase
         //then
         $element = $types[0];
         Assert::thatArray($element->getElementAttributes())->containsKeyAndValue(array(
-            array('type' => 'element', 'value' => 'ns:MocksWrapperClassCustomer', 'name' => 'customer'),
-            array('type' => 'element', 'value' => 'ns:MocksWrapperClassPurchase', 'name' => 'purchase')
+            array('type' => 'element', 'value' => 'ns:MocksWrapperClassCustomer', 'name' => 'customer', 'optional' => false),
+            array('type' => 'element', 'value' => 'ns:MocksWrapperClassPurchase', 'name' => 'purchase', 'optional' => false)
         ));
         Assert::thatArray($element->getComplex())->onMethod('getName')->containsOnly("MocksWrapperClassCustomer", "MocksWrapperClassPurchase");
     }

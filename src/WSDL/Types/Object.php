@@ -34,16 +34,18 @@ class Object implements Type
 {
     private $_type;
     private $_name;
+    private $_optional;
     /**
      * @var ComplexTypeParser[]
      */
     private $_complexType;
 
-    public function __construct($type, $name, $complexType)
+    public function __construct($type, $name, $complexType, $optional = false)
     {
         $this->_type = $type;
         $this->_name = $name;
         $this->_complexType = $complexType;
+        $this->_optional = $optional;
     }
 
     public function getType()
@@ -54,6 +56,11 @@ class Object implements Type
     public function getName()
     {
         return $this->_name;
+    }
+
+    public function getOptional()
+    {
+        return $this->_optional;
     }
 
     /**

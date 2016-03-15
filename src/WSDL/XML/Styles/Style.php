@@ -55,6 +55,10 @@ abstract class Style
             'name' => $returning->getName(),
             $type => $value
         );
+
+        if ($returning->getOptional()) {
+            $element['minOccurs'] = 0;
+        }
         return $element;
     }
 
@@ -134,7 +138,7 @@ abstract class Style
                 $value = TypeHelper::getXsdType($complexType->getType());
             }
 
-            $typesElement->setElementAttributes($type, $value, $complexType->getName());
+            $typesElement->setElementAttributes($type, $value, $complexType->getName(), $complexType->getOptional());
 
             $this->_setComplexTypeIfNeeded($complexType, $typesElement);
         }

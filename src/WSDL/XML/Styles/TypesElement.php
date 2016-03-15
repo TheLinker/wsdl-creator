@@ -45,9 +45,9 @@ class TypesElement
         return $this->_name;
     }
 
-    public function setElementAttributes($type, $value, $name)
+    public function setElementAttributes($type, $value, $name, $optional = false)
     {
-        $this->_elementAttributes[] = array('type' => $type, 'value' => $value, 'name' => $name);
+        $this->_elementAttributes[] = array('type' => $type, 'value' => $value, 'name' => $name, 'optional' => $optional);
         return $this;
     }
 

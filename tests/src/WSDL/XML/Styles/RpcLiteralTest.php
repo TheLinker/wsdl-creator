@@ -100,8 +100,8 @@ class RpcLiteralTest extends PHPUnit_Framework_TestCase
         $type = $types[0];
         $this->assertEquals('Info', $type->getName());
         $this->assertEquals(array(
-            array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name'),
-            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age')
+            array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name', 'optional' => false),
+            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age', 'optional' => false)
         ), $type->getElementAttributes());
 //        $this->assertNull($type->getComplex());
     }
@@ -121,16 +121,16 @@ class RpcLiteralTest extends PHPUnit_Framework_TestCase
         $type = $types[0];
         $this->assertEquals('AgentNameWithId', $type->getName());
         $this->assertEquals(array(
-            array('type' => 'element', 'value' => 'ns:MocksMockUserWrapper', 'name' => 'agent'),
-            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id')
+            array('type' => 'element', 'value' => 'ns:MocksMockUserWrapper', 'name' => 'agent', 'optional' => false),
+            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false)
         ), $type->getElementAttributes());
         $actualComplex = $type->getComplex();
         Assert::thatArray($actualComplex)->onMethod('getName')->containsExactly('MocksMockUserWrapper');
         Assert::thatArray($type->getComplex())->onMethod('getElementAttributes')
             ->containsKeyAndValue(array(array(
-                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id'),
-                array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name'),
-                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age')
+                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false),
+                array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name', 'optional' => false),
+                array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age', 'optional' => false)
             )));
     }
 
@@ -149,8 +149,8 @@ class RpcLiteralTest extends PHPUnit_Framework_TestCase
         $type = $types[0];
         $this->assertEquals('NamesInfo', $type->getName());
         $this->assertEquals(array(
-            array('type' => 'type', 'value' => 'ns:ArrayOfNames', 'name' => 'names'),
-            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id')
+            array('type' => 'type', 'value' => 'ns:ArrayOfNames', 'name' => 'names', 'optional' => false),
+            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false)
         ), $type->getElementAttributes());
         Assert::thatArray($type->getComplex())->onMethod('getName')->containsExactly('ArrayOfNames');
         Assert::thatArray($type->getComplex())->onMethod('getArrayType')->containsExactly('xsd:string[]');
@@ -173,8 +173,8 @@ class RpcLiteralTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('ns:Companies[]', $type->getArrayType());
         $this->assertEquals('Companies', $type->getComplex()->getName());
         $this->assertEquals(array(
-            array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name'),
-            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id')
+            array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name', 'optional' => false),
+            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false)
         ), $type->getComplex()->getElementAttributes());
     }
 
@@ -193,17 +193,17 @@ class RpcLiteralTest extends PHPUnit_Framework_TestCase
         $type = $types[0];
         $this->assertEquals('ListOfAgents', $type->getName());
         $this->assertEquals(array(
-            array('type' => 'type', 'value' => 'ns:ArrayOfAgents', 'name' => 'agents'),
-            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id')
+            array('type' => 'type', 'value' => 'ns:ArrayOfAgents', 'name' => 'agents', 'optional' => false),
+            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false)
         ), $type->getElementAttributes());
         $actualComplex = $type->getComplex();
         Assert::thatArray($actualComplex)->onMethod('getName')->containsExactly('ArrayOfAgents');
         Assert::thatArray($actualComplex)->onMethod('getArrayType')->containsExactly('ns:MocksMockUserWrapper[]');
         $this->assertEquals('MocksMockUserWrapper', $actualComplex[0]->getComplex()->getName());
         $this->assertEquals(array(
-            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id'),
-            array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name'),
-            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age')
+            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'id', 'optional' => false),
+            array('type' => 'type', 'value' => 'xsd:string', 'name' => 'name', 'optional' => false),
+            array('type' => 'type', 'value' => 'xsd:int', 'name' => 'age', 'optional' => false)
         ), $actualComplex[0]->getComplex()->getElementAttributes());
     }
 }

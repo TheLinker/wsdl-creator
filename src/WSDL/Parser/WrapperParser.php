@@ -76,46 +76,51 @@ class WrapperParser
             }
         }
 
+        $optional = false;
+        if (preg_match('#@optional#', $docComment, $matches)) {
+            $optional = true;
+        }
+
         switch ($strategy) {
             case 'object':
-                $this->_complexTypes[] = new Object($type, $name, $this->getComplexTypes());
+                $this->_complexTypes[] = new Object($type, $name, $this->getComplexTypes(), $optional);
                 break;
             case 'wrapper':
-                $this->_complexTypes[] = $this->_createWrapperObject($type, $name, $docComment);
+                $this->_complexTypes[] = $this->_createWrapperObject($type, $name, $docComment, $optional);
                 break;
             case 'array':
-                $this->_complexTypes[] = $this->_createArrayObject($type, $name, $docComment);
+                $this->_complexTypes[] = $this->_createArrayObject($type, $name, $docComment, $optional);
                 break;
             default:
-                $this->_complexTypes[] = new ComplexTypeParser($type, $name);
+                $this->_complexTypes[] = new ComplexTypeParser($type, $name, $optional);
                 break;
         }
     }
 
-    private function _createWrapperObject($type, $name, $docComment)
+    private function _createWrapperObject($type, $name, $docComment, $optional = false)
     {
         $wrapper = $this->wrapper($type, $docComment);
         $object = null;
         if ($wrapper->getComplexTypes()) {
-            $object = new Object($type, $name, $wrapper->getComplexTypes());
+            $object = new Object($type, $name, $wrapper->getComplexTypes(), $optional);
         }
-        return new Object($type, $name, $object);
+        return new Object($type, $name, $object, $optional);
     }
 
-    private function _createArrayObject($type, $name, $docComment)
+    private function _createArrayObject($type, $name, $docComment, $optional = false)
     {
         $object = null;
         if ($type == 'wrapper') {
             $complex = $this->wrapper($type, $docComment)->getComplexTypes();
-            $object = new Object($type, $name, $complex);
+            $object = new Object($type, $name, $complex, $optional);
         } elseif ($this->isComplex($type)) {
             $complex = $this->getComplexTypes();
-            $object = new Object($type, $name, $complex);
+            $object = new Object($type, $name, $complex, $optional);
         }
         if (!isset(self::$arrayCnt[$name])) {
             self::$arrayCnt[$name] = 0;
         }
-        return new Arrays($type, $name, $object, self::$arrayCnt[$name]++);
+        return new Arrays($type, $name, $object, $optional, self::$arrayCnt[$name]++);
     }
 
     public function getComplexTypes()
