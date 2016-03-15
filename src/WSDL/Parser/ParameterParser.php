@@ -40,6 +40,7 @@ class ParameterParser
     private $_type;
     private $_name;
     private $_methodName;
+    private $_optional;
 
     public function __construct($parameter, $methodName = '')
     {
@@ -56,16 +57,17 @@ class ParameterParser
     {
         $this->_parseAndSetType();
         $this->_parseAndSetName();
+        $this->_parseAndSetOptional();
 
         switch ($this->_strategy) {
             case 'object':
-                return new Object($this->getType(), $this->getName(), $this->complexTypes());
+                return new Object($this->getType(), $this->getName(), $this->complexTypes(), $this->getOptional());
             case 'wrapper':
                 return $this->_createWrapperObject();
             case 'array':
                 return $this->_createArrayObject();
             default:
-                return new Simple($this->getType(), $this->getName());
+                return new Simple($this->getType(), $this->getName(), $this->getOptional());
         }
     }
 
@@ -92,14 +94,20 @@ class ParameterParser
         $this->_name = OuzoArrays::getValue($name, 1, '');
     }
 
+    private function _parseAndSetOptional()
+    {
+        preg_match('#\\$(\w+)#', $this->_parameter, $name);
+        $this->_optional  = !!preg_match('#@optional#', $this->_parameter, $matches);
+    }
+
     private function _createWrapperObject()
     {
         $wrapper = $this->wrapper();
         $object = null;
         if ($wrapper->getComplexTypes()) {
-            $object = new Object($this->getType(), $this->getName(), $wrapper->getComplexTypes());
+            $object = new Object($this->getType(), $this->getName(), $wrapper->getComplexTypes(), $this->getOptional());
         }
-        return new Object($this->getType(), $this->getName(), $object);
+        return new Object($this->getType(), $this->getName(), $object, $this->getOptional());
     }
 
     private function _createArrayObject()
@@ -107,12 +115,12 @@ class ParameterParser
         $object = null;
         if ($this->_type == 'wrapper') {
             $complex = $this->wrapper()->getComplexTypes();
-            $object = new Object($this->getType(), $this->getName(), $complex);
+            $object = new Object($this->getType(), $this->getName(), $complex, $this->getOptional());
         } elseif ($this->isComplex()) {
             $complex = $this->complexTypes();
-            $object = new Object($this->getType(), $this->getName(), $complex);
+            $object = new Object($this->getType(), $this->getName(), $complex, $this->getOptional());
         }
-        return new Arrays($this->getType(), $this->getName(), $object);
+        return new Arrays($this->getType(), $this->getName(), $object, $this->getOptional());
     }
 
     public function getType()
@@ -123,6 +131,11 @@ class ParameterParser
     public function getName()
     {
         return $this->_name;
+    }
+
+    public function getOptional()
+    {
+        return $this->_optional;
     }
 
     public function complexTypes()

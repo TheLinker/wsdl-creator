@@ -33,11 +33,13 @@ class ComplexTypeParser
 {
     private $_type;
     private $_name;
+    private $_optional;
 
-    public function __construct($type, $name)
+    public function __construct($type, $name, $optional = false)
     {
         $this->_type = $type;
         $this->_name = $name;
+        $this->_optional = $optional;
     }
 
     public function getName()
@@ -48,6 +50,11 @@ class ComplexTypeParser
     public function getType()
     {
         return $this->_type;
+    }
+
+    public function getOptional()
+    {
+        return $this->_optional;
     }
 
     /**

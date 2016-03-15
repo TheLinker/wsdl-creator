@@ -32,11 +32,13 @@ class Simple implements Type
 {
     private $_type;
     private $_name;
+    private $_optional;
 
-    public function __construct($type, $name)
+    public function __construct($type, $name, $optional = false)
     {
         $this->_type = $type;
         $this->_name = $name;
+        $this->_optional = $optional;
     }
 
     public function getType()
@@ -47,5 +49,10 @@ class Simple implements Type
     public function getName()
     {
         return $this->_name;
+    }
+
+    public function getOptional()
+    {
+        return $this->_optional;
     }
 }

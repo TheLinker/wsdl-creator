@@ -27,10 +27,13 @@ namespace WSDL\Types;
  * Type
  *
  * @author Piotr Olaszewski <piotroo89@gmail.com>
+ * @author Tomas K. <iam+git@tomask.info>
  */
 interface Type
 {
     public function getType();
 
     public function getName();
+
+    public function getOptional();
 }

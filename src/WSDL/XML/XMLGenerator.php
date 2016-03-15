@@ -200,10 +200,16 @@ class XMLGenerator
 
         $types = $parameter->getElementAttributes();
         foreach ($types as $complexType) {
-            $elementPartElement = $this->createElementWithAttributes('xsd:element', array(
+            $params = array(
                 'name' => $complexType['name'],
                 'type' => $complexType['value']
-            ));
+            );
+            // Optional element
+            if ($complexType['optional']) {
+                $params['minOccurs'] = 0;
+                $params['maxOccurs'] = 1;
+            }
+            $elementPartElement = $this->createElementWithAttributes('xsd:element', $params);
             $sequenceElement->appendChild($elementPartElement);
         }
 
