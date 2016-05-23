@@ -79,8 +79,9 @@ class DocumentLiteralWrapped extends Style
     {
         $element = new TypesElement();
         $element->setName($method->getName() . 'Response');
-        $returning = $method->returning();
-        $this->_generateElements($returning, $element);
+        foreach($method->returning() as $parameter) {
+            $this->_generateElements($parameter, $element);
+        }
         return $element;
     }
 

@@ -82,6 +82,10 @@ class MethodParser
      */
     public function returning()
     {
+        preg_match_all('#@return (.+)#', $this->doc, $groupMatches);
+        $this->rawReturn = $groupMatches[1];
+        return ParameterParser::create($groupMatches[1], $this->getName());
+
         preg_match('#@return (.+)#', $this->doc, $groupMatches);
         $trimGroupMatches = array_map('trim', $groupMatches);
         if (isset($trimGroupMatches[1])) {
