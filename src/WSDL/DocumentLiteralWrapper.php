@@ -58,11 +58,14 @@ class DocumentLiteralWrapper
         $args = $this->_parseArgs($args, $parameters);
         $return = call_user_func_array(array($this->_obj, $method), $args);
 
-        $obj = new stdClass();
-        foreach(array_keys($return) as $returnVariable) {
-            $obj->$returnVariable = $return[$returnVariable];
+        if (is_array($return)) {
+            $obj = new stdClass();
+            foreach(array_keys($return) as $returnVariable) {
+               $obj->$returnVariable = $return[$returnVariable];
+            }
+            return $obj;
         }
-        return $obj;
+        return $return;
     }
 
     private function _parseArgs($args, $parameters)
