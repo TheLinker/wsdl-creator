@@ -30,7 +30,7 @@ use WSDL\Parser\ComplexTypeParser;
  *
  * @author Piotr Olaszewski <piotroo89@gmail.com>
  */
-class Object implements Type
+class BaseObject implements Type
 {
     private $_type;
     private $_name;
