@@ -1,5 +1,5 @@
 {
-  "name": "georgo/wsdl-creator",
+  "name": "TheLinker/wsdl-creator",
   "description": "PHP WSDL creator using PHPdoc (annotations, reflections).",
   "minimum-stability": "dev",
   "license": "MIT",
