@@ -37,7 +37,7 @@ class MethodWrapper
     public $return;
     public $sampleRequest;
 
-    public function __construct($name, $parameters, $return, $sampleRequest)
+    public function __construct($name, $parameters, $return, $sampleRequest = "")
     {
         $this->name = $name;
         $this->parameters = $parameters;
@@ -47,9 +47,12 @@ class MethodWrapper
 
     public function getSampleRequest()
     {
-        $DOMDocument = new DOMDocument();
-        $DOMDocument->loadXML($this->sampleRequest);
-        $DOMDocument->formatOutput = true;
-        return $DOMDocument->saveXML();
+        if($this->sampleRequest != "") {
+            $DOMDocument = new DOMDocument();
+            $DOMDocument->loadXML($this->sampleRequest);
+            $DOMDocument->formatOutput = true;
+            return $DOMDocument->saveXML();
+        }
+        return "";
     }
 }

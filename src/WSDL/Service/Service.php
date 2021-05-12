@@ -52,27 +52,31 @@ class Service
         $this->methods = $methods;
     }
 
-    public function render($name, $namespace)
+    public function render($name, $namespace, $sampleRequest = false)
     {
         $this->template = new stdClass();
         $this->template->serviceName = $name;
         $this->template->serviceNamespace = $namespace;
-        $this->template->methods = $this->_wrapperMethods();
+        $this->template->methods = $this->_wrapperMethods($sampleRequest);
         require_once 'service_template.phtml';
     }
 
-    private function _wrapperMethods()
+    private function _wrapperMethods($sampleRequest = false)
     {
         $methods = array();
         foreach ($this->methods as $method) {
-            $soapClient = new SoapClient($this->wsdl, array(
-                'uri' => "http://foo.bar/",
-                'location' => $this->location,
-                'trace' => true,
-                'cache_wsdl' => WSDL_CACHE_NONE
-            ));
-            call_user_func_array(array($soapClient, $method->getName()), $this->getParams($method));
-            $methods[] = new MethodWrapper($method->getName(), $method->getRawParameters(), $method->getRawReturn()[0], $soapClient->__getLastRequest());
+            $sampleRequestStr = "";
+            if($sampleRequest) {
+                $soapClient = new SoapClient($this->wsdl, array(
+                    'uri' => "http://foo.bar/",
+                    'location' => $this->location,
+                    'trace' => true,
+                    'cache_wsdl' => WSDL_CACHE_NONE
+                ));
+                call_user_func_array(array($soapClient, $method->getName()), $this->getParams($method));
+                $sampleRequestStr = $soapClient->__getLastRequest();
+            }
+            $methods[] = new MethodWrapper($method->getName(), $method->getRawParameters(), $method->getRawReturn()[0], $sampleRequestStr);
         }
         return $methods;
     }

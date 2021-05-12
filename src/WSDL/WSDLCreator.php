@@ -106,12 +106,12 @@ class WSDLCreator
         return $this;
     }
 
-    public function renderWSDLService()
+    public function renderWSDLService($sampleRequest = false)
     {
         $headers = apache_request_headers();
         if (empty($headers['Content-Type']) || !preg_match('#xml#i', $headers['Content-Type'])) {
             $newService = new Service($this->_location, $this->getWsdlLocation(), $this->_classParser->getMethods());
-            $newService->render($this->_class, $this->getNamespaceWithSanitizedClass());
+            $newService->render($this->_class, $this->getNamespaceWithSanitizedClass(), $sampleRequest);
         }
     }
 
