@@ -53,8 +53,11 @@ class RpcLiteral extends Style
 
     public function methodOutput(MethodParser $method)
     {
-        $returnElement = $this->_createElement($method->returning());
-        return $returnElement;
+        $ret = [];
+        foreach($method->returning() as $reting) {
+            $ret[] = $this->_createElement($reting);
+        }
+        return $ret;
     }
 
     public function typeParameters(MethodParser $method)
@@ -68,6 +71,10 @@ class RpcLiteral extends Style
 
     public function typeReturning(MethodParser $method)
     {
-        return $this->_generateType($method->returning());
+        $ret = [];
+        foreach($method->returning() as $reting) {
+            $ret[] = $this->_generateType($reting);
+        }
+        return $ret;
     }
 }

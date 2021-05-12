@@ -95,7 +95,7 @@ abstract class Style
         return null;
     }
 
-    protected function _generateComplexType(Type $parameter)
+    protected function _generateComplexType($parameter)
     {
         if (TypeHelper::isArray($parameter)) {
             return $this->_generateArray($parameter);

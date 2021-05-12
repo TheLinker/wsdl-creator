@@ -72,7 +72,7 @@ class Service
                 'cache_wsdl' => WSDL_CACHE_NONE
             ));
             call_user_func_array(array($soapClient, $method->getName()), $this->getParams($method));
-            $methods[] = new MethodWrapper($method->getName(), $method->getRawParameters(), $method->getRawReturn()[0], $soapClient->__getLastRequest());
+            $methods[] = new MethodWrapper($method->getName(), $method->getRawParameters(), $method->getRawReturn(), $soapClient->__getLastRequest());
         }
         return $methods;
     }

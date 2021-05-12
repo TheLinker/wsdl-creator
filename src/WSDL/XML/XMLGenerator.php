@@ -150,7 +150,9 @@ class XMLGenerator
             }
 
             $typeReturning = $this->_bindingStyle->typeReturning($method);
-            $this->_generateComplexType($typeReturning, $schemaElement);
+            foreach($typeReturning as $tr) {
+                $this->_generateComplexType($tr, $schemaElement);
+            }
         }
 
         $typesElement->appendChild($schemaElement);
@@ -327,8 +329,10 @@ class XMLGenerator
             'name' => $method->getName() . 'Response'
         ));
         $partsOutput = $this->_bindingStyle->methodOutput($method);
-        $partsOutput = $this->createElementWithAttributes('part', $partsOutput);
-        $messageOutputElement->appendChild($partsOutput);
+        foreach($partsOutput as $po) {
+            $po = $this->createElementWithAttributes('part', $po);
+            $messageOutputElement->appendChild($po);
+        }
         return $messageOutputElement;
     }
 
